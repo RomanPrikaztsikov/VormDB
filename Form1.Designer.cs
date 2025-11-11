@@ -1,0 +1,261 @@
+﻿namespace VormDB
+{
+    partial class Form1
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.Label kategooriad;
+            this.lisa_kat_btn = new System.Windows.Forms.Button();
+            this.kustuta_kat_btn = new System.Windows.Forms.Button();
+            this.toode = new System.Windows.Forms.Label();
+            this.kogus = new System.Windows.Forms.Label();
+            this.hind = new System.Windows.Forms.Label();
+            this.hind_txt = new System.Windows.Forms.TextBox();
+            this.kogus_txt = new System.Windows.Forms.TextBox();
+            this.toode_txt = new System.Windows.Forms.TextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.toode_pb = new System.Windows.Forms.PictureBox();
+            this.lisa_btn = new System.Windows.Forms.Button();
+            this.uuenda_btn = new System.Windows.Forms.Button();
+            this.kustuta_btn = new System.Windows.Forms.Button();
+            this.puhasta_btn = new System.Windows.Forms.Button();
+            this.otsi_btn = new System.Windows.Forms.Button();
+            this.kat_box = new System.Windows.Forms.ComboBox();
+            kategooriad = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // lisa_kat_btn
+            // 
+            this.lisa_kat_btn.Location = new System.Drawing.Point(75, 209);
+            this.lisa_kat_btn.Name = "lisa_kat_btn";
+            this.lisa_kat_btn.Size = new System.Drawing.Size(113, 23);
+            this.lisa_kat_btn.TabIndex = 0;
+            this.lisa_kat_btn.Text = "Lisa kategooriat";
+            this.lisa_kat_btn.UseVisualStyleBackColor = true;
+            this.lisa_kat_btn.Click += new System.EventHandler(this.lisa_kat_btn_Click);
+            // 
+            // kustuta_kat_btn
+            // 
+            this.kustuta_kat_btn.Location = new System.Drawing.Point(194, 209);
+            this.kustuta_kat_btn.Name = "kustuta_kat_btn";
+            this.kustuta_kat_btn.Size = new System.Drawing.Size(117, 23);
+            this.kustuta_kat_btn.TabIndex = 1;
+            this.kustuta_kat_btn.Text = "Kustuta kategooriat";
+            this.kustuta_kat_btn.UseVisualStyleBackColor = true;
+            this.kustuta_kat_btn.Click += new System.EventHandler(this.kustuta_kat_btn_Click);
+            // 
+            // toode
+            // 
+            this.toode.AutoSize = true;
+            this.toode.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.toode.Location = new System.Drawing.Point(60, 33);
+            this.toode.Name = "toode";
+            this.toode.Size = new System.Drawing.Size(69, 25);
+            this.toode.TabIndex = 2;
+            this.toode.Text = "Toode";
+            // 
+            // kogus
+            // 
+            this.kogus.AutoSize = true;
+            this.kogus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.kogus.Location = new System.Drawing.Point(60, 75);
+            this.kogus.Name = "kogus";
+            this.kogus.Size = new System.Drawing.Size(69, 25);
+            this.kogus.TabIndex = 3;
+            this.kogus.Text = "Kogus";
+            // 
+            // hind
+            // 
+            this.hind.AutoSize = true;
+            this.hind.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.hind.Location = new System.Drawing.Point(70, 121);
+            this.hind.Name = "hind";
+            this.hind.Size = new System.Drawing.Size(52, 25);
+            this.hind.TabIndex = 4;
+            this.hind.Text = "Hind";
+            // 
+            // kategooriad
+            // 
+            kategooriad.AutoSize = true;
+            kategooriad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            kategooriad.Location = new System.Drawing.Point(4, 172);
+            kategooriad.Name = "kategooriad";
+            kategooriad.Size = new System.Drawing.Size(118, 25);
+            kategooriad.TabIndex = 5;
+            kategooriad.Text = "Kategooriad";
+            // 
+            // hind_txt
+            // 
+            this.hind_txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.hind_txt.Location = new System.Drawing.Point(135, 122);
+            this.hind_txt.Name = "hind_txt";
+            this.hind_txt.Size = new System.Drawing.Size(114, 26);
+            this.hind_txt.TabIndex = 10;
+            // 
+            // kogus_txt
+            // 
+            this.kogus_txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.kogus_txt.Location = new System.Drawing.Point(135, 74);
+            this.kogus_txt.Name = "kogus_txt";
+            this.kogus_txt.Size = new System.Drawing.Size(114, 26);
+            this.kogus_txt.TabIndex = 11;
+            // 
+            // toode_txt
+            // 
+            this.toode_txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.toode_txt.Location = new System.Drawing.Point(135, 32);
+            this.toode_txt.Name = "toode_txt";
+            this.toode_txt.Size = new System.Drawing.Size(114, 26);
+            this.toode_txt.TabIndex = 12;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(48, 267);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(697, 200);
+            this.dataGridView1.TabIndex = 13;
+            // 
+            // toode_pb
+            // 
+            this.toode_pb.Location = new System.Drawing.Point(429, 12);
+            this.toode_pb.Name = "toode_pb";
+            this.toode_pb.Size = new System.Drawing.Size(316, 188);
+            this.toode_pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.toode_pb.TabIndex = 14;
+            this.toode_pb.TabStop = false;
+            // 
+            // lisa_btn
+            // 
+            this.lisa_btn.Location = new System.Drawing.Point(75, 238);
+            this.lisa_btn.Name = "lisa_btn";
+            this.lisa_btn.Size = new System.Drawing.Size(75, 23);
+            this.lisa_btn.TabIndex = 15;
+            this.lisa_btn.Text = "Lisa";
+            this.lisa_btn.UseVisualStyleBackColor = true;
+            // 
+            // uuenda_btn
+            // 
+            this.uuenda_btn.Location = new System.Drawing.Point(156, 238);
+            this.uuenda_btn.Name = "uuenda_btn";
+            this.uuenda_btn.Size = new System.Drawing.Size(75, 23);
+            this.uuenda_btn.TabIndex = 16;
+            this.uuenda_btn.Text = "Uuenda";
+            this.uuenda_btn.UseVisualStyleBackColor = true;
+            // 
+            // kustuta_btn
+            // 
+            this.kustuta_btn.Location = new System.Drawing.Point(237, 238);
+            this.kustuta_btn.Name = "kustuta_btn";
+            this.kustuta_btn.Size = new System.Drawing.Size(75, 23);
+            this.kustuta_btn.TabIndex = 17;
+            this.kustuta_btn.Text = "Kustuta";
+            this.kustuta_btn.UseVisualStyleBackColor = true;
+            // 
+            // puhasta_btn
+            // 
+            this.puhasta_btn.Location = new System.Drawing.Point(318, 238);
+            this.puhasta_btn.Name = "puhasta_btn";
+            this.puhasta_btn.Size = new System.Drawing.Size(75, 23);
+            this.puhasta_btn.TabIndex = 18;
+            this.puhasta_btn.Text = "Puhasta";
+            this.puhasta_btn.UseVisualStyleBackColor = true;
+            // 
+            // otsi_btn
+            // 
+            this.otsi_btn.Location = new System.Drawing.Point(318, 209);
+            this.otsi_btn.Name = "otsi_btn";
+            this.otsi_btn.Size = new System.Drawing.Size(75, 23);
+            this.otsi_btn.TabIndex = 19;
+            this.otsi_btn.Text = "Otsi fail";
+            this.otsi_btn.UseVisualStyleBackColor = true;
+            this.otsi_btn.Click += new System.EventHandler(this.otsi_btn_Click);
+            // 
+            // kat_box
+            // 
+            this.kat_box.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.kat_box.FormattingEnabled = true;
+            this.kat_box.ItemHeight = 16;
+            this.kat_box.Location = new System.Drawing.Point(135, 172);
+            this.kat_box.Name = "kat_box";
+            this.kat_box.Size = new System.Drawing.Size(114, 24);
+            this.kat_box.TabIndex = 20;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.kat_box);
+            this.Controls.Add(this.otsi_btn);
+            this.Controls.Add(this.puhasta_btn);
+            this.Controls.Add(this.kustuta_btn);
+            this.Controls.Add(this.uuenda_btn);
+            this.Controls.Add(this.lisa_btn);
+            this.Controls.Add(this.toode_pb);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.toode_txt);
+            this.Controls.Add(this.kogus_txt);
+            this.Controls.Add(this.hind_txt);
+            this.Controls.Add(kategooriad);
+            this.Controls.Add(this.hind);
+            this.Controls.Add(this.kogus);
+            this.Controls.Add(this.toode);
+            this.Controls.Add(this.kustuta_kat_btn);
+            this.Controls.Add(this.lisa_kat_btn);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Button lisa_kat_btn;
+        private System.Windows.Forms.Button kustuta_kat_btn;
+        private System.Windows.Forms.Label toode;
+        private System.Windows.Forms.Label kogus;
+        private System.Windows.Forms.Label hind;
+        private System.Windows.Forms.TextBox hind_txt;
+        private System.Windows.Forms.TextBox kogus_txt;
+        private System.Windows.Forms.TextBox toode_txt;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.PictureBox toode_pb;
+        private System.Windows.Forms.Button lisa_btn;
+        private System.Windows.Forms.Button uuenda_btn;
+        private System.Windows.Forms.Button kustuta_btn;
+        private System.Windows.Forms.Button puhasta_btn;
+        private System.Windows.Forms.Button otsi_btn;
+        private System.Windows.Forms.ComboBox kat_box;
+    }
+}
+

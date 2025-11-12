@@ -22,12 +22,65 @@ namespace VormDB
         {
             InitializeComponent();
             NäitaKategooriad();
+            NaitaAndmed();
+        }
+
+        Form popupForm;
+
+        private void Loopilt(Image image, int rowIndex)
+        {
+            popupForm = new Form();
+            popupForm.FormBorderStyle = FormBorderStyle.None;
+            popupForm.StartPosition = FormStartPosition.Manual;
+            popupForm.Size = new Size(200, 200);
+
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.Image = image;
+            pictureBox.Dock = DockStyle.Fill;
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            popupForm.Controls.Add(pictureBox);
+
+            var rect = dataGridView1.GetCellDisplayRectangle(4, rowIndex, true);
+            var pos = dataGridView1.PointToScreen(rect.Location);
+
+            pos.X -= rect.Width;
+
+            popupForm.Location = pos;
+            popupForm.Show();
+        }
+
+        public void NaitaAndmed()
+        {
+            connect.Open();
+            DataTable dt_toode = new DataTable();
+            adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Id,Toodetabel.Toodenimetus, Toodetabel.Kogus," +
+                "Toodetabel.Hind, Toodetabel.Pilt,Toodetabel.Bpilt, Kategooriatabel.Kategooria_nimetus " +
+                "as Kategooria_nimetus FROM Toodetabel INNER JOIN Kategooriatabel on Toodetabel.Kategooriad=Kategooriatabel.Id", connect);
+             adapter_toode.Fill(dt_toode);
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = dt_toode;
+            DataGridViewComboBoxColumn combo_kat= new DataGridViewComboBoxColumn();
+            combo_kat.DataPropertyName = "Kategooria_nimetus";
+            HashSet<string> keys = new HashSet<string>();
+            foreach (DataRow item in dt_toode.Rows)
+            {
+                string kat_n = item["Kategooria_nimetus"].ToString();
+                if(!keys.Contains(kat_n))
+                {
+                    keys.Add(kat_n);
+                    combo_kat.Items.Add(kat_n);
+                }
+            }
+            dataGridView1.Columns.Add(combo_kat);
+            toode_pb.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\Images"), "epood.png"));
+            connect.Close();
         }
 
         public void NäitaKategooriad()
         {
             connect.Open();
-            adapter_kategooria = new SqlDataAdapter("SELECT Id, Kategooria_nimetus FROM Kategooriadtabel", connect);
+            adapter_kategooria = new SqlDataAdapter("SELECT Id, Kategooria_nimetus FROM Kategooriatabel", connect);
             DataTable dt_kat = new DataTable();
             adapter_kategooria.Fill(dt_kat);
             foreach (DataRow item in dt_kat.Rows)
@@ -38,7 +91,7 @@ namespace VormDB
                 }
                 else
                 {
-                    command = new SqlCommand("DELETE FROM Kategooriadtabel WHERE Id=@id", connect);
+                    command = new SqlCommand("DELETE FROM Kategooriatabel WHERE Id=@id", connect);
                     command.Parameters.AddWithValue("@id", item["Id"]);
                     command.ExecuteNonQuery();
                 }
@@ -52,7 +105,7 @@ namespace VormDB
             {
                 connect.Open();
                 string kat_val = kat_box.SelectedItem.ToString();
-                command = new SqlCommand("DELETE FROM kategooriadtabel WHERE Kategooria_nimetus=@kat", connect);
+                command = new SqlCommand("DELETE FROM Kategooriatabel WHERE Kategooria_nimetus=@kat", connect);
                 command.Parameters.AddWithValue("@kat", kat_val);
                 command.ExecuteNonQuery();
                 connect.Close();
@@ -92,7 +145,65 @@ namespace VormDB
             }
         }
 
-                private void lisa_kat_btn_Click(object sender, EventArgs e)
+        byte[] imageData;
+
+        private void dataGridView1_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 4)
+            {
+                imageData = dataGridView1.Rows[e.RowIndex].Cells["Bpilt"].Value as byte[];
+                if (imageData !=null)
+                {
+                    using (MemoryStream ms = new MemoryStream(imageData))
+                    {
+                        Image image = Image.FromStream(ms);
+                        Loopilt(image, e.RowIndex);
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (popupForm !=null && !popupForm.IsDisposed)
+            {
+                popupForm.Close();
+            }
+        }
+
+        private void lisa_btn_Click(object sender, EventArgs e)
+        {
+            if (toode_txt.Text.Trim()!=string.Empty && kogus_txt.Text.Trim()!=string.Empty && hind_txt.Text.Trim()!=string.Empty && kat_box.SelectedItem!=null)
+            {
+                try
+                {
+                    connect.Open();
+                    command = new SqlCommand("SELECT Id FROM Kategooriatabel WHERE Kategooria_nimetus=@kat", connect);
+                    command.Parameters.AddWithValue("@kat", kat_box.Text);
+                    command.ExecuteNonQuery();
+                    var Id = Convert.ToInt32(command.ExecuteScalar());
+                    command = new SqlCommand("INSERT INTO Toodetabel (Toodenimetus,Kogus,hind,Pilt,Bpilt,Kategooriad) " +
+                        " VALUES (@toode,@kogus,@hind,@pilt,@bpilt,@kat)", connect);
+                    command.Parameters.AddWithValue("@toode", toode_txt.Text);
+                    command.Parameters.AddWithValue("@kogus", kogus_txt.Text);
+                    command.Parameters.AddWithValue("@hind", hind_txt.Text);
+                    extension = Path.GetExtension(open.FileName);
+                    command.Parameters.AddWithValue("@pilt", toode_txt.Text + extension);
+                    imageData= File.ReadAllBytes(open.FileName);
+                    command.Parameters.AddWithValue("@bpilt", imageData);
+                    command.Parameters.AddWithValue("@kat", Id);
+                    command.ExecuteNonQuery();
+                    connect.Close();
+                    NaitaAndmed();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
+
+        private void lisa_kat_btn_Click(object sender, EventArgs e)
                 {
                     bool on = false;
                     foreach (var item in kat_box.Items)
@@ -104,7 +215,7 @@ namespace VormDB
                     }
                     if (on == false)
                     {
-                        command = new SqlCommand("insert into Kategooriadtabel (kategooria_nimetus) VALUES (@kat)", connect);
+                        command = new SqlCommand("insert into Kategooriatabel (kategooria_nimetus) VALUES (@kat)", connect);
                         connect.Open();
                         command.Parameters.AddWithValue("@kat", kat_box.Text);
                         command.ExecuteNonQuery();

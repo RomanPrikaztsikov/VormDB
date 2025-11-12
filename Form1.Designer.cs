@@ -50,6 +50,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).BeginInit();
             this.SuspendLayout();
             // 
+            // kategooriad
+            // 
+            kategooriad.AutoSize = true;
+            kategooriad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            kategooriad.Location = new System.Drawing.Point(4, 172);
+            kategooriad.Name = "kategooriad";
+            kategooriad.Size = new System.Drawing.Size(118, 25);
+            kategooriad.TabIndex = 5;
+            kategooriad.Text = "Kategooriad";
+            // 
             // lisa_kat_btn
             // 
             this.lisa_kat_btn.Location = new System.Drawing.Point(75, 209);
@@ -100,16 +110,6 @@
             this.hind.TabIndex = 4;
             this.hind.Text = "Hind";
             // 
-            // kategooriad
-            // 
-            kategooriad.AutoSize = true;
-            kategooriad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            kategooriad.Location = new System.Drawing.Point(4, 172);
-            kategooriad.Name = "kategooriad";
-            kategooriad.Size = new System.Drawing.Size(118, 25);
-            kategooriad.TabIndex = 5;
-            kategooriad.Text = "Kategooriad";
-            // 
             // hind_txt
             // 
             this.hind_txt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
@@ -139,8 +139,10 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(48, 267);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(697, 200);
+            this.dataGridView1.Size = new System.Drawing.Size(697, 184);
             this.dataGridView1.TabIndex = 13;
+            this.dataGridView1.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellMouseEnter);
+            this.dataGridView1.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellMouseLeave);
             // 
             // toode_pb
             // 
@@ -159,6 +161,7 @@
             this.lisa_btn.TabIndex = 15;
             this.lisa_btn.Text = "Lisa";
             this.lisa_btn.UseVisualStyleBackColor = true;
+            this.lisa_btn.Click += new System.EventHandler(this.lisa_btn_Click);
             // 
             // uuenda_btn
             // 

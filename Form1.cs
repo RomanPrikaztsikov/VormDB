@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -182,7 +182,7 @@ namespace VormDB
                     command.Parameters.AddWithValue("@kat", kat_box.Text);
                     command.ExecuteNonQuery();
                     var Id = Convert.ToInt32(command.ExecuteScalar());
-                    command = new SqlCommand("INSERT INTO Toodetabel (Toodenimetus,Kogus,hind,Pilt,Bpilt,Kategooriad) " +
+                    command = new SqlCommand("INSERT INTO Toodetabel (Toodenimetus,Kogus,Hind,Pilt,Bpilt,Kategooriad) " +
                         " VALUES (@toode,@kogus,@hind,@pilt,@bpilt,@kat)", connect);
                     command.Parameters.AddWithValue("@toode", toode_txt.Text);
                     command.Parameters.AddWithValue("@kogus", kogus_txt.Text);
@@ -203,30 +203,96 @@ namespace VormDB
             }
         }
 
+        private void puhasta_btn_Click(object sender, EventArgs e)
+        {
+            toode_txt.Text = "";
+            kogus_txt.Text = "";
+            hind_txt.Text = "";
+            kat_box.SelectedItem = null;
+            using(FileStream fs = new FileStream(Path.Combine(Path.GetFullPath(@"..\..\Images"), "epood.png"), FileMode.Open, FileAccess.Read))
+            {
+                toode_pb.Image = Image.FromStream(fs);
+            }
+
+        }
+
+        private void kustuta_btn_Click(object sender, EventArgs e)
+        {
+            var Id = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["Id"].Value);
+            MessageBox.Show(Id.ToString());
+            if (Id != 0)
+            {
+                command = new SqlCommand("DELETE Toodetabel WHERE Id=@Id", connect);
+                connect.Open();
+                command.Parameters.AddWithValue("@id", Id);
+                command.ExecuteNonQuery();
+                connect.Close();
+
+                NaitaAndmed();
+
+                MessageBox.Show("Andmed tabelist Tooded on kustutatud");
+            }
+            else
+            {
+                MessageBox.Show("Viga Tooded tabelist andmete kustutamisega");
+            }
+        }
+
+        private void uuenda_btn_Click(object sender, EventArgs e)
+        {
+            if (toode_txt.Text != "" && kogus_txt.Text != "" && hind_txt.Text != "" && toode_pb.Image != null)
+            {
+                var Id = Convert.ToInt32(dataGridView1.SelectedCells[0].OwningRow.Cells["Id"].Value);
+                command = new SqlCommand("UPDATE Toodetabel SET Toodenimetus=@toode, Kogus=@kogus," +
+                    "Hind=@hind, Pilt=@pilt WHERE Id=@id", connect);
+                connect.Open();
+                command.Parameters.AddWithValue("@id", Id);
+                command.Parameters.AddWithValue("@toode", toode_txt.Text);
+                command.Parameters.AddWithValue("@kogus", kogus_txt.Text);
+                command.Parameters.AddWithValue("@hind", hind_txt.Text.Replace(",", "."));
+                string pilt = dataGridView1.SelectedCells[0].OwningRow.Cells["Pilt"].Value.ToString();
+                string file_pilt = toode_txt.Text + extension;
+                command.Parameters.AddWithValue("@pilt", file_pilt);
+                command.ExecuteNonQuery();
+                connect.Close();
+                NaitaAndmed();
+                MessageBox.Show("Andmed uuendatud");
+            }
+            else
+            {
+                MessageBox.Show("Viga");
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void lisa_kat_btn_Click(object sender, EventArgs e)
+            {
+                bool on = false;
+                foreach (var item in kat_box.Items)
                 {
-                    bool on = false;
-                    foreach (var item in kat_box.Items)
+                    if (item.ToString() == kat_box.Text)
                     {
-                        if (item.ToString() == kat_box.Text)
-                        {
-                            on = true;
-                        }
-                    }
-                    if (on == false)
-                    {
-                        command = new SqlCommand("insert into Kategooriatabel (kategooria_nimetus) VALUES (@kat)", connect);
-                        connect.Open();
-                        command.Parameters.AddWithValue("@kat", kat_box.Text);
-                        command.ExecuteNonQuery();
-                        connect.Close();
-                        kat_box.Items.Clear();
-                        NäitaKategooriad();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Selline kategooriat on juba olemas!");
+                        on = true;
                     }
                 }
+                if (on == false)
+                {
+                    command = new SqlCommand("insert into Kategooriatabel (kategooria_nimetus) VALUES (@kat)", connect);
+                    connect.Open();
+                    command.Parameters.AddWithValue("@kat", kat_box.Text);
+                    command.ExecuteNonQuery();
+                    connect.Close();
+                    kat_box.Items.Clear();
+                    NäitaKategooriad();
+                }
+                else
+                {
+                    MessageBox.Show("Selline kategooriat on juba olemas!");
+                }
+            }
     }
 }

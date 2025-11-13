@@ -171,6 +171,7 @@
             this.uuenda_btn.TabIndex = 16;
             this.uuenda_btn.Text = "Uuenda";
             this.uuenda_btn.UseVisualStyleBackColor = true;
+            this.uuenda_btn.Click += new System.EventHandler(this.uuenda_btn_Click);
             // 
             // kustuta_btn
             // 
@@ -180,6 +181,7 @@
             this.kustuta_btn.TabIndex = 17;
             this.kustuta_btn.Text = "Kustuta";
             this.kustuta_btn.UseVisualStyleBackColor = true;
+            this.kustuta_btn.Click += new System.EventHandler(this.kustuta_btn_Click);
             // 
             // puhasta_btn
             // 
@@ -189,6 +191,7 @@
             this.puhasta_btn.TabIndex = 18;
             this.puhasta_btn.Text = "Puhasta";
             this.puhasta_btn.UseVisualStyleBackColor = true;
+            this.puhasta_btn.Click += new System.EventHandler(this.puhasta_btn_Click);
             // 
             // otsi_btn
             // 
@@ -214,7 +217,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1120, 450);
             this.Controls.Add(this.kat_box);
             this.Controls.Add(this.otsi_btn);
             this.Controls.Add(this.puhasta_btn);
@@ -234,6 +237,7 @@
             this.Controls.Add(this.lisa_kat_btn);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).EndInit();
             this.ResumeLayout(false);

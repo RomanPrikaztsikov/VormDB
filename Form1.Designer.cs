@@ -329,7 +329,6 @@
             this.Controls.Add(this.lisa_kat_btn);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kliendi_tooted_grid)).EndInit();

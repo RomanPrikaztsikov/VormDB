@@ -270,11 +270,6 @@ namespace VormDB
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void kliendi_kat_box_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (kliendi_kat_box.SelectedItem != null)
@@ -334,11 +329,6 @@ namespace VormDB
             {
                 MessageBox.Show("Viga");
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void lisa_kat_btn_Click(object sender, EventArgs e)

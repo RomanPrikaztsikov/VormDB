@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -330,6 +330,15 @@ namespace VormDB
                 kliendi_tooted_grid.Columns["Bpilt"].Visible = false;
                 connect.Close();
             }
+            else
+            {
+                MessageBox.Show("Viga");
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void lisa_kat_btn_Click(object sender, EventArgs e)

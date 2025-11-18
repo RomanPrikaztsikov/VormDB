@@ -15,7 +15,7 @@ namespace VormDB
     public partial class Form1 : Form
     {
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\opilane\source\repos\TARpv24Prikaztsikov\VormDB\Tooded_DB.mdf;Integrated Security=True");
-        
+
         SqlDataAdapter adapter_toode, adapter_kategooria;
         SqlCommand command;
         public Form1()
@@ -23,6 +23,15 @@ namespace VormDB
             InitializeComponent();
             NäitaKategooriad();
             NaitaAndmed();
+
+            try
+            {
+                otsingu_ikoon_pb.Image = Image.FromFile(Path.Combine(Path.GetFullPath(@"..\..\Images"), "search.png"));
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Viga");
+            }
         }
 
         Form popupForm;
@@ -57,16 +66,16 @@ namespace VormDB
             adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Id,Toodetabel.Toodenimetus, Toodetabel.Kogus," +
                 "Toodetabel.Hind, Toodetabel.Pilt,Toodetabel.Bpilt, Kategooriatabel.Kategooria_nimetus " +
                 "as Kategooria_nimetus FROM Toodetabel INNER JOIN Kategooriatabel on Toodetabel.Kategooriad=Kategooriatabel.Id", connect);
-             adapter_toode.Fill(dt_toode);
+            adapter_toode.Fill(dt_toode);
             dataGridView1.Columns.Clear();
             dataGridView1.DataSource = dt_toode;
-            DataGridViewComboBoxColumn combo_kat= new DataGridViewComboBoxColumn();
+            DataGridViewComboBoxColumn combo_kat = new DataGridViewComboBoxColumn();
             combo_kat.DataPropertyName = "Kategooria_nimetus";
             HashSet<string> keys = new HashSet<string>();
             foreach (DataRow item in dt_toode.Rows)
             {
                 string kat_n = item["Kategooria_nimetus"].ToString();
-                if(!keys.Contains(kat_n))
+                if (!keys.Contains(kat_n))
                 {
                     keys.Add(kat_n);
                     combo_kat.Items.Add(kat_n);
@@ -79,6 +88,8 @@ namespace VormDB
 
         public void NäitaKategooriad()
         {
+            kliendi_kat_box.Items.Clear();
+
             connect.Open();
             adapter_kategooria = new SqlDataAdapter("SELECT Id, Kategooria_nimetus FROM Kategooriatabel", connect);
             DataTable dt_kat = new DataTable();
@@ -88,12 +99,7 @@ namespace VormDB
                 if (!kat_box.Items.Contains(item["Kategooria_nimetus"]))
                 {
                     kat_box.Items.Add(item["Kategooria_nimetus"]);
-                }
-                else
-                {
-                    command = new SqlCommand("DELETE FROM Kategooriatabel WHERE Id=@id", connect);
-                    command.Parameters.AddWithValue("@id", item["Id"]);
-                    command.ExecuteNonQuery();
+                    kliendi_kat_box.Items.Add(item["Kategooria_nimetus"]);
                 }
             }
             connect.Close();
@@ -101,7 +107,7 @@ namespace VormDB
 
         private void kustuta_kat_btn_Click(object sender, EventArgs e)
         {
-            if (kat_box.SelectedItem!=null)
+            if (kat_box.SelectedItem != null)
             {
                 connect.Open();
                 string kat_val = kat_box.SelectedItem.ToString();
@@ -132,7 +138,7 @@ namespace VormDB
                 save.InitialDirectory = Path.GetFullPath(@"..\..\Images");
                 extension = Path.GetExtension(open.FileName);
                 save.FileName = toode_txt.Text + Path.GetExtension(open.FileName);
-                save.Filter="Images"+Path.GetExtension(open.FileName)+"|"+ Path.GetExtension(open.FileName);
+                save.Filter = "Images" + Path.GetExtension(open.FileName) + "|" + Path.GetExtension(open.FileName);
                 if (save.ShowDialog() == DialogResult.OK && toode_txt.Text != null)
                 {
                     File.Copy(open.FileName, save.FileName);
@@ -152,7 +158,7 @@ namespace VormDB
             if (e.RowIndex >= 0 && e.ColumnIndex >= 4)
             {
                 imageData = dataGridView1.Rows[e.RowIndex].Cells["Bpilt"].Value as byte[];
-                if (imageData !=null)
+                if (imageData != null)
                 {
                     using (MemoryStream ms = new MemoryStream(imageData))
                     {
@@ -165,7 +171,7 @@ namespace VormDB
 
         private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-            if (popupForm !=null && !popupForm.IsDisposed)
+            if (popupForm != null && !popupForm.IsDisposed)
             {
                 popupForm.Close();
             }
@@ -173,7 +179,7 @@ namespace VormDB
 
         private void lisa_btn_Click(object sender, EventArgs e)
         {
-            if (toode_txt.Text.Trim()!=string.Empty && kogus_txt.Text.Trim()!=string.Empty && hind_txt.Text.Trim()!=string.Empty && kat_box.SelectedItem!=null)
+            if (toode_txt.Text.Trim() != string.Empty && kogus_txt.Text.Trim() != string.Empty && hind_txt.Text.Trim() != string.Empty && kat_box.SelectedItem != null)
             {
                 try
                 {
@@ -189,7 +195,7 @@ namespace VormDB
                     command.Parameters.AddWithValue("@hind", hind_txt.Text);
                     extension = Path.GetExtension(open.FileName);
                     command.Parameters.AddWithValue("@pilt", toode_txt.Text + extension);
-                    imageData= File.ReadAllBytes(open.FileName);
+                    imageData = File.ReadAllBytes(open.FileName);
                     command.Parameters.AddWithValue("@bpilt", imageData);
                     command.Parameters.AddWithValue("@kat", Id);
                     command.ExecuteNonQuery();
@@ -209,7 +215,7 @@ namespace VormDB
             kogus_txt.Text = "";
             hind_txt.Text = "";
             kat_box.SelectedItem = null;
-            using(FileStream fs = new FileStream(Path.Combine(Path.GetFullPath(@"..\..\Images"), "epood.png"), FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream(Path.Combine(Path.GetFullPath(@"..\..\Images"), "epood.png"), FileMode.Open, FileAccess.Read))
             {
                 toode_pb.Image = Image.FromStream(fs);
             }
@@ -269,30 +275,87 @@ namespace VormDB
 
         }
 
-        private void lisa_kat_btn_Click(object sender, EventArgs e)
+        private void kliendi_kat_box_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (kliendi_kat_box.SelectedItem != null)
             {
-                bool on = false;
-                foreach (var item in kat_box.Items)
+                connect.Open();
+                adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Toodenimetus, Toodetabel.Hind, Toodetabel.Kogus, Toodetabel.Bpilt FROM Toodetabel INNER JOIN Kategooriatabel ON Toodetabel.Kategooriad = Kategooriatabel.Id WHERE Kategooriatabel.Kategooria_nimetus = '" + kliendi_kat_box.SelectedItem.ToString() + "'", connect);
+                DataTable dt_klient = new DataTable();
+                adapter_toode.Fill(dt_klient);
+                kliendi_tooted_grid.DataSource = dt_klient;
+                kliendi_tooted_grid.Columns["Bpilt"].Visible = false;
+                connect.Close();
+            }
+        }
+
+        private void kliendi_tooted_grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow rida = kliendi_tooted_grid.Rows[e.RowIndex];
+
+                nimi.Text = "Toode: " + rida.Cells["Toodenimetus"].Value.ToString();
+                hind2.Text = "Hind: " + rida.Cells["Hind"].Value.ToString() + " €";
+                kogus2.Text = "Kogus: " + rida.Cells["Kogus"].Value.ToString() + " tk";
+
+                if (rida.Cells["Bpilt"].Value != DBNull.Value)
                 {
-                    if (item.ToString() == kat_box.Text)
+                    byte[] pilt = (byte[])rida.Cells["Bpilt"].Value;
+                    using (MemoryStream ms = new MemoryStream(pilt))
                     {
-                        on = true;
+                        kliendi_toode_pilt_pb.Image = Image.FromStream(ms);
+                        kliendi_toode_pilt_pb.SizeMode = PictureBoxSizeMode.Zoom;
                     }
-                }
-                if (on == false)
-                {
-                    command = new SqlCommand("insert into Kategooriatabel (kategooria_nimetus) VALUES (@kat)", connect);
-                    connect.Open();
-                    command.Parameters.AddWithValue("@kat", kat_box.Text);
-                    command.ExecuteNonQuery();
-                    connect.Close();
-                    kat_box.Items.Clear();
-                    NäitaKategooriad();
                 }
                 else
                 {
-                    MessageBox.Show("Selline kategooriat on juba olemas!");
+                    kliendi_toode_pilt_pb.Image = null;
                 }
             }
+        }
+        private void otsingu_txt_TextChanged(object sender, EventArgs e)
+        {
+            if (kliendi_kat_box.SelectedItem != null)
+            {
+                connect.Open();
+                string valitud_kat = kliendi_kat_box.SelectedItem.ToString();
+                string otsingusona = otsingu_txt.Text;
+
+                adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Toodenimetus, Toodetabel.Hind, Toodetabel.Kogus, Toodetabel.Bpilt FROM Toodetabel INNER JOIN Kategooriatabel ON Toodetabel.Kategooriad = Kategooriatabel.Id WHERE Kategooriatabel.Kategooria_nimetus = '" + valitud_kat + "' AND Toodetabel.Toodenimetus LIKE '%" + otsingusona + "%'", connect);
+
+                DataTable dt_klient = new DataTable();
+                adapter_toode.Fill(dt_klient);
+                kliendi_tooted_grid.DataSource = dt_klient;
+                kliendi_tooted_grid.Columns["Bpilt"].Visible = false;
+                connect.Close();
+            }
+        }
+
+        private void lisa_kat_btn_Click(object sender, EventArgs e)
+        {
+            bool on = false;
+            foreach (var item in kat_box.Items)
+            {
+                if (item.ToString() == kat_box.Text)
+                {
+                    on = true;
+                }
+            }
+            if (on == false)
+            {
+                command = new SqlCommand("insert into Kategooriatabel (kategooria_nimetus) VALUES (@kat)", connect);
+                connect.Open();
+                command.Parameters.AddWithValue("@kat", kat_box.Text);
+                command.ExecuteNonQuery();
+                connect.Close();
+                kat_box.Items.Clear();
+                NäitaKategooriad();
+            }
+            else
+            {
+                MessageBox.Show("Selline kategooriat on juba olemas!");
+            }
+        }
     }
 }

@@ -97,6 +97,7 @@
   <ItemGroup>
     <Content Include="images\default_image.png" />
     <Content Include="images\epood.png" />
+    <Content Include="images\search.png" />
     <Content Include="Tooded_DB.mdf" />
     <Content Include="Tooded_DB_log.ldf">
       <DependentUpon>Tooded_DB.mdf</DependentUpon>

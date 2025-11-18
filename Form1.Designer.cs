@@ -45,9 +45,20 @@
             this.puhasta_btn = new System.Windows.Forms.Button();
             this.otsi_btn = new System.Windows.Forms.Button();
             this.kat_box = new System.Windows.Forms.ComboBox();
+            this.kliendi_kat_box = new System.Windows.Forms.ComboBox();
+            this.kliendi_tooted_grid = new System.Windows.Forms.DataGridView();
+            this.kliendi_toode_pilt_pb = new System.Windows.Forms.PictureBox();
+            this.nimi = new System.Windows.Forms.Label();
+            this.hind2 = new System.Windows.Forms.Label();
+            this.kogus2 = new System.Windows.Forms.Label();
+            this.otsingu_txt = new System.Windows.Forms.TextBox();
+            this.otsingu_ikoon_pb = new System.Windows.Forms.PictureBox();
             kategooriad = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kliendi_tooted_grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kliendi_toode_pilt_pb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.otsingu_ikoon_pb)).BeginInit();
             this.SuspendLayout();
             // 
             // kategooriad
@@ -213,11 +224,92 @@
             this.kat_box.Size = new System.Drawing.Size(114, 24);
             this.kat_box.TabIndex = 20;
             // 
+            // kliendi_kat_box
+            // 
+            this.kliendi_kat_box.FormattingEnabled = true;
+            this.kliendi_kat_box.Location = new System.Drawing.Point(920, 12);
+            this.kliendi_kat_box.Name = "kliendi_kat_box";
+            this.kliendi_kat_box.Size = new System.Drawing.Size(188, 21);
+            this.kliendi_kat_box.TabIndex = 21;
+            this.kliendi_kat_box.SelectedIndexChanged += new System.EventHandler(this.kliendi_kat_box_SelectedIndexChanged);
+            // 
+            // kliendi_tooted_grid
+            // 
+            this.kliendi_tooted_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.kliendi_tooted_grid.Location = new System.Drawing.Point(833, 46);
+            this.kliendi_tooted_grid.Name = "kliendi_tooted_grid";
+            this.kliendi_tooted_grid.Size = new System.Drawing.Size(240, 150);
+            this.kliendi_tooted_grid.TabIndex = 22;
+            this.kliendi_tooted_grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.kliendi_tooted_grid_CellClick);
+            // 
+            // kliendi_toode_pilt_pb
+            // 
+            this.kliendi_toode_pilt_pb.Location = new System.Drawing.Point(854, 209);
+            this.kliendi_toode_pilt_pb.Name = "kliendi_toode_pilt_pb";
+            this.kliendi_toode_pilt_pb.Size = new System.Drawing.Size(199, 139);
+            this.kliendi_toode_pilt_pb.TabIndex = 23;
+            this.kliendi_toode_pilt_pb.TabStop = false;
+            // 
+            // nimi
+            // 
+            this.nimi.AutoSize = true;
+            this.nimi.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.nimi.Location = new System.Drawing.Point(851, 351);
+            this.nimi.Name = "nimi";
+            this.nimi.Size = new System.Drawing.Size(48, 24);
+            this.nimi.TabIndex = 24;
+            this.nimi.Text = "Nimi";
+            // 
+            // hind2
+            // 
+            this.hind2.AutoSize = true;
+            this.hind2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.hind2.Location = new System.Drawing.Point(851, 377);
+            this.hind2.Name = "hind2";
+            this.hind2.Size = new System.Drawing.Size(50, 24);
+            this.hind2.TabIndex = 25;
+            this.hind2.Text = "Hind";
+            // 
+            // kogus2
+            // 
+            this.kogus2.AutoSize = true;
+            this.kogus2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.kogus2.Location = new System.Drawing.Point(851, 403);
+            this.kogus2.Name = "kogus2";
+            this.kogus2.Size = new System.Drawing.Size(64, 24);
+            this.kogus2.TabIndex = 26;
+            this.kogus2.Text = "Kogus";
+            // 
+            // otsingu_txt
+            // 
+            this.otsingu_txt.Location = new System.Drawing.Point(779, 13);
+            this.otsingu_txt.Name = "otsingu_txt";
+            this.otsingu_txt.Size = new System.Drawing.Size(122, 20);
+            this.otsingu_txt.TabIndex = 27;
+            this.otsingu_txt.TextChanged += new System.EventHandler(this.otsingu_txt_TextChanged);
+            // 
+            // otsingu_ikoon_pb
+            // 
+            this.otsingu_ikoon_pb.Location = new System.Drawing.Point(751, 13);
+            this.otsingu_ikoon_pb.Name = "otsingu_ikoon_pb";
+            this.otsingu_ikoon_pb.Size = new System.Drawing.Size(25, 25);
+            this.otsingu_ikoon_pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.otsingu_ikoon_pb.TabIndex = 28;
+            this.otsingu_ikoon_pb.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 450);
+            this.Controls.Add(this.otsingu_ikoon_pb);
+            this.Controls.Add(this.otsingu_txt);
+            this.Controls.Add(this.kogus2);
+            this.Controls.Add(this.hind2);
+            this.Controls.Add(this.nimi);
+            this.Controls.Add(this.kliendi_toode_pilt_pb);
+            this.Controls.Add(this.kliendi_tooted_grid);
+            this.Controls.Add(this.kliendi_kat_box);
             this.Controls.Add(this.kat_box);
             this.Controls.Add(this.otsi_btn);
             this.Controls.Add(this.puhasta_btn);
@@ -240,6 +332,9 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kliendi_tooted_grid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kliendi_toode_pilt_pb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.otsingu_ikoon_pb)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,6 +358,14 @@
         private System.Windows.Forms.Button puhasta_btn;
         private System.Windows.Forms.Button otsi_btn;
         private System.Windows.Forms.ComboBox kat_box;
+        private System.Windows.Forms.ComboBox kliendi_kat_box;
+        private System.Windows.Forms.DataGridView kliendi_tooted_grid;
+        private System.Windows.Forms.PictureBox kliendi_toode_pilt_pb;
+        private System.Windows.Forms.Label nimi;
+        private System.Windows.Forms.Label hind2;
+        private System.Windows.Forms.Label kogus2;
+        private System.Windows.Forms.TextBox otsingu_txt;
+        private System.Windows.Forms.PictureBox otsingu_ikoon_pb;
     }
 }
 

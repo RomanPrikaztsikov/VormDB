@@ -53,6 +53,8 @@
             this.kogus2 = new System.Windows.Forms.Label();
             this.otsingu_txt = new System.Windows.Forms.TextBox();
             this.otsingu_ikoon_pb = new System.Windows.Forms.PictureBox();
+            this.raha_lbl = new System.Windows.Forms.Label();
+            this.osta_btn = new System.Windows.Forms.Button();
             kategooriad = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toode_pb)).BeginInit();
@@ -236,9 +238,9 @@
             // kliendi_tooted_grid
             // 
             this.kliendi_tooted_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.kliendi_tooted_grid.Location = new System.Drawing.Point(833, 46);
+            this.kliendi_tooted_grid.Location = new System.Drawing.Point(760, 44);
             this.kliendi_tooted_grid.Name = "kliendi_tooted_grid";
-            this.kliendi_tooted_grid.Size = new System.Drawing.Size(240, 150);
+            this.kliendi_tooted_grid.Size = new System.Drawing.Size(343, 150);
             this.kliendi_tooted_grid.TabIndex = 22;
             this.kliendi_tooted_grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.kliendi_tooted_grid_CellClick);
             // 
@@ -297,11 +299,34 @@
             this.otsingu_ikoon_pb.TabIndex = 28;
             this.otsingu_ikoon_pb.TabStop = false;
             // 
+            // raha_lbl
+            // 
+            this.raha_lbl.AutoSize = true;
+            this.raha_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.raha_lbl.Location = new System.Drawing.Point(747, 355);
+            this.raha_lbl.Name = "raha_lbl";
+            this.raha_lbl.Size = new System.Drawing.Size(101, 20);
+            this.raha_lbl.TabIndex = 29;
+            this.raha_lbl.Text = "Raha: €1000";
+            // 
+            // osta_btn
+            // 
+            this.osta_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.osta_btn.Location = new System.Drawing.Point(760, 380);
+            this.osta_btn.Name = "osta_btn";
+            this.osta_btn.Size = new System.Drawing.Size(75, 47);
+            this.osta_btn.TabIndex = 30;
+            this.osta_btn.Text = "Osta";
+            this.osta_btn.UseVisualStyleBackColor = true;
+            this.osta_btn.Click += new System.EventHandler(this.osta_btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1120, 450);
+            this.Controls.Add(this.osta_btn);
+            this.Controls.Add(this.raha_lbl);
             this.Controls.Add(this.otsingu_ikoon_pb);
             this.Controls.Add(this.otsingu_txt);
             this.Controls.Add(this.kogus2);
@@ -365,6 +390,8 @@
         private System.Windows.Forms.Label kogus2;
         private System.Windows.Forms.TextBox otsingu_txt;
         private System.Windows.Forms.PictureBox otsingu_ikoon_pb;
+        private System.Windows.Forms.Label raha_lbl;
+        private System.Windows.Forms.Button osta_btn;
     }
 }
 

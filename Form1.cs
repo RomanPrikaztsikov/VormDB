@@ -14,6 +14,8 @@ namespace VormDB
 {
     public partial class Form1 : Form
     {
+        double raha = 1000;
+
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\opilane\source\repos\TARpv24Prikaztsikov\VormDB\Tooded_DB.mdf;Integrated Security=True");
 
         SqlDataAdapter adapter_toode, adapter_kategooria;
@@ -275,10 +277,11 @@ namespace VormDB
             if (kliendi_kat_box.SelectedItem != null)
             {
                 connect.Open();
-                adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Toodenimetus, Toodetabel.Hind, Toodetabel.Kogus, Toodetabel.Bpilt FROM Toodetabel INNER JOIN Kategooriatabel ON Toodetabel.Kategooriad = Kategooriatabel.Id WHERE Kategooriatabel.Kategooria_nimetus = '" + kliendi_kat_box.SelectedItem.ToString() + "'", connect);
+                adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Id, Toodetabel.Toodenimetus, Toodetabel.Hind, Toodetabel.Kogus, Toodetabel.Bpilt FROM Toodetabel INNER JOIN Kategooriatabel ON Toodetabel.Kategooriad = Kategooriatabel.Id WHERE Kategooriatabel.Kategooria_nimetus = '" + kliendi_kat_box.SelectedItem.ToString() + "'", connect);
                 DataTable dt_klient = new DataTable();
                 adapter_toode.Fill(dt_klient);
                 kliendi_tooted_grid.DataSource = dt_klient;
+                kliendi_tooted_grid.Columns["Id"].Visible = false;
                 kliendi_tooted_grid.Columns["Bpilt"].Visible = false;
                 connect.Close();
             }
@@ -317,11 +320,12 @@ namespace VormDB
                 string valitud_kat = kliendi_kat_box.SelectedItem.ToString();
                 string otsingusona = otsingu_txt.Text;
 
-                adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Toodenimetus, Toodetabel.Hind, Toodetabel.Kogus, Toodetabel.Bpilt FROM Toodetabel INNER JOIN Kategooriatabel ON Toodetabel.Kategooriad = Kategooriatabel.Id WHERE Kategooriatabel.Kategooria_nimetus = '" + valitud_kat + "' AND Toodetabel.Toodenimetus LIKE '%" + otsingusona + "%'", connect);
+                adapter_toode = new SqlDataAdapter("SELECT Toodetabel.Id, Toodetabel.Toodenimetus, Toodetabel.Hind, Toodetabel.Kogus, Toodetabel.Bpilt FROM Toodetabel INNER JOIN Kategooriatabel ON Toodetabel.Kategooriad = Kategooriatabel.Id WHERE Kategooriatabel.Kategooria_nimetus = '" + valitud_kat + "' AND Toodetabel.Toodenimetus LIKE '%" + otsingusona + "%'", connect);
 
                 DataTable dt_klient = new DataTable();
                 adapter_toode.Fill(dt_klient);
                 kliendi_tooted_grid.DataSource = dt_klient;
+                kliendi_tooted_grid.Columns["Id"].Visible = false;
                 kliendi_tooted_grid.Columns["Bpilt"].Visible = false;
                 connect.Close();
             }
@@ -331,6 +335,51 @@ namespace VormDB
             }
         }
 
+        private void osta_btn_Click(object sender, EventArgs e)
+        {
+            if (kliendi_tooted_grid.CurrentRow != null)
+            {
+                double hind = Convert.ToDouble(kliendi_tooted_grid.CurrentRow.Cells["Hind"].Value);
+                int kogus = Convert.ToInt32(kliendi_tooted_grid.CurrentRow.Cells["Kogus"].Value);
+                int id = Convert.ToInt32(kliendi_tooted_grid.CurrentRow.Cells["Id"].Value);
+
+                if (raha >= hind)
+                {
+                    raha = raha - hind;
+                    raha_lbl.Text = "Raha: " + raha.ToString();
+
+                    connect.Open();
+
+                    if (kogus > 1)
+                    {
+                        command = new SqlCommand("UPDATE Toodetabel SET Kogus = Kogus - 1 WHERE Id = @id", connect);
+                        command.Parameters.AddWithValue("@id", id);
+                        command.ExecuteNonQuery();
+                        kogus2.Text = "Kogus: " + (kogus - 1).ToString() + " tk";
+                    }
+                    else
+                    {
+                        command = new SqlCommand("DELETE FROM Toodetabel WHERE Id = @id", connect);
+                        command.Parameters.AddWithValue("@id", id);
+                        command.ExecuteNonQuery();
+                        kogus2.Text = "";
+                        nimi.Text = "";
+                        hind2.Text = "";
+                        kliendi_toode_pilt_pb.Image = null;
+                    }
+
+                    connect.Close();
+                    kliendi_kat_box_SelectedIndexChanged(sender, e);
+
+                    MessageBox.Show("Ost sooritatud!");
+                }
+                else
+                {
+                    MessageBox.Show("Teil ei ole piisavalt raha!");
+                }
+            }
+        }
+        
         private void lisa_kat_btn_Click(object sender, EventArgs e)
         {
             bool on = false;
